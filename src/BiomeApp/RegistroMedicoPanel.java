@@ -39,30 +39,37 @@ public class RegistroMedicoPanel extends javax.swing.JFrame {
     File imageFile = null;
     final String cargo = "medico";
     String medicoId = "";
+    String cargoUsuario = "";
+    boolean edit = false;
 
     /**
      * Creates new form Administrador
      */
-    public RegistroMedicoPanel() {
+    public RegistroMedicoPanel(String cargo) {
         initComponents();
+        cargoUsuario = cargo;
         this.setTitle("Medico");
         this.setLocation(250, 50);
         this.setResizable(false);
         groupButton();
-        update_buttom.setVisible(false);
-        create_buttom.setVisible(true);
     }
 
-    public RegistroMedicoPanel(String id) {
+    public RegistroMedicoPanel(String id, String cargo) {
         initComponents();
-        this.setTitle("Edit Medico");
         this.setLocation(250, 50);
         this.setResizable(false);
+        cargoUsuario = cargo;
+        edit = true;
         titulo.setText("Editar Medico");
         medicoId = id;
         InitEdit(id);
+        groupButton();
         update_buttom.setVisible(true);
         create_buttom.setVisible(false);
+    }
+
+    private RegistroMedicoPanel() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void InitEdit(String id) {
@@ -381,8 +388,13 @@ public class RegistroMedicoPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        new AdministradorPanel("medico").setVisible(true);
-        dispose();
+        if (edit) {
+            new GestorUsuarios(cargoUsuario).setVisible(true);
+            dispose();
+        } else {
+            new AdministradorPanel(cargoUsuario).setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -460,7 +472,7 @@ public class RegistroMedicoPanel extends javax.swing.JFrame {
                 pstm.setString(9, cargo);
                 pstm.execute();
                 JOptionPane.showMessageDialog(null, "Registro Exitoso");
-                new AdministradorPanel(cargo).setVisible(true);
+                new AdministradorPanel(cargoUsuario).setVisible(true);
                 dispose();
             } catch (SQLException ex) {
                 Logger.getLogger(RegistroMedicoPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -538,7 +550,7 @@ public class RegistroMedicoPanel extends javax.swing.JFrame {
                     pstm.executeUpdate();
                 }
                 JOptionPane.showMessageDialog(null, "Actualizacion Exitoso");
-                new GestorUsuarios(cargo).setVisible(true);
+                new GestorUsuarios(cargoUsuario).setVisible(true);
                 dispose();
             } catch (SQLException ex) {
                 Logger.getLogger(RegistroMedicoPanel.class.getName()).log(Level.SEVERE, null, ex);

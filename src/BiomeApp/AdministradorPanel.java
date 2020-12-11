@@ -15,15 +15,15 @@ import java.util.logging.Logger;
  */
 public class AdministradorPanel extends javax.swing.JFrame {
 
-    String cargo = "";
+    String usuarioCargo = "";
 
     /**
      * Creates new form Administrador
      */
     public AdministradorPanel(String cargo) {
-        cargo = cargo;
+        usuarioCargo = cargo;
         initComponents();
-        this.setTitle("Administrador usuarios");
+        this.setTitle("Administrador");
         this.setLocation(250, 50);
         this.setResizable(false);
         if (cargo.equals("medico")) {
@@ -172,27 +172,27 @@ public class AdministradorPanel extends javax.swing.JFrame {
 
     private void botom_gestorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botom_gestorActionPerformed
 
-        new GestorUsuarios(cargo).setVisible(true);
+        new GestorUsuarios(usuarioCargo).setVisible(true);
         dispose();
     }//GEN-LAST:event_botom_gestorActionPerformed
 
     private void botom_biomedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botom_biomedicoActionPerformed
-        new RegistroBiomedicoPanel().setVisible(true);
+        new RegistroBiomedicoPanel(usuarioCargo).setVisible(true);
         dispose();
     }//GEN-LAST:event_botom_biomedicoActionPerformed
 
     private void botom_enfermeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botom_enfermeroActionPerformed
-        new RegistroEnfermeroPanel().setVisible(true);
+        new RegistroEnfermeroPanel(usuarioCargo).setVisible(true);
         dispose();
     }//GEN-LAST:event_botom_enfermeroActionPerformed
 
     private void botom_equiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botom_equiposActionPerformed
-        new RegistroEquipoPanel().setVisible(true);
+        new RegistroEquipoPanel(usuarioCargo).setVisible(true);
         dispose();
     }//GEN-LAST:event_botom_equiposActionPerformed
 
     private void botom_pacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botom_pacienteActionPerformed
-        new RegistroPacientePanel().setVisible(true);
+        new RegistroPacientePanel(usuarioCargo).setVisible(true);
         dispose();
     }//GEN-LAST:event_botom_pacienteActionPerformed
 
@@ -203,7 +203,7 @@ public class AdministradorPanel extends javax.swing.JFrame {
 
     private void botom_medicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botom_medicoActionPerformed
 
-        new RegistroMedicoPanel().setVisible(true);
+        new RegistroMedicoPanel(usuarioCargo).setVisible(true);
         dispose();
     }//GEN-LAST:event_botom_medicoActionPerformed
 

@@ -34,12 +34,15 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
 
     final String cargo = "paciente";
     String idPaciente = "";
+    String cargoUsuario = "";
+    boolean edit = false;
 
     /**
      * Creates new form Enfermero
      */
-    public RegistroPacientePanel() {
+    public RegistroPacientePanel(String cargo) {
         initComponents();
+        cargoUsuario = cargo;
         this.setTitle("Paciente");
         this.setLocation(250, 50);
         this.setResizable(false);
@@ -49,18 +52,24 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
         initEnfermero();
     }
 
-    public RegistroPacientePanel(String id) {
+    public RegistroPacientePanel(String id, String cargo) {
         initComponents();
         this.setTitle("Editar Paciente");
         this.setLocation(250, 50);
         this.setResizable(false);
         groupButton();
+        cargoUsuario = cargo;
+        edit = true;
         titulo.setText("Editar Paciente");
         idPaciente = id;
         InitEdit(id);
         update_buttom.setVisible(true);
         create_buttom.setVisible(false);
         initEnfermero();
+    }
+
+    private RegistroPacientePanel() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void initEnfermero() {
@@ -227,7 +236,7 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
                 text_codigoActionPerformed(evt);
             }
         });
-        jPanel2.add(text_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 270, 210, -1));
+        jPanel2.add(text_codigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 240, 210, -1));
 
         nom.setBackground(new java.awt.Color(102, 0, 102));
         nom.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
@@ -259,16 +268,16 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
         jbl_Contraseña3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jbl_Contraseña3.setForeground(new java.awt.Color(255, 255, 255));
         jbl_Contraseña3.setText("Codigo Paciente");
-        jPanel2.add(jbl_Contraseña3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, -1, -1));
+        jPanel2.add(jbl_Contraseña3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, -1, -1));
 
         campo_fecha.setBackground(new java.awt.Color(102, 0, 102));
         campo_fecha.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel2.add(campo_fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, 210, -1));
+        jPanel2.add(campo_fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 160, 210, -1));
 
         jbl_Especialidad1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jbl_Especialidad1.setForeground(new java.awt.Color(255, 255, 255));
         jbl_Especialidad1.setText("Sexo");
-        jPanel2.add(jbl_Especialidad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, -1, -1));
+        jPanel2.add(jbl_Especialidad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 50, -1, -1));
 
         masculino.setBackground(new java.awt.Color(153, 0, 153));
         masculino.setForeground(new java.awt.Color(255, 255, 255));
@@ -278,12 +287,12 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
                 masculinoActionPerformed(evt);
             }
         });
-        jPanel2.add(masculino, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, -1, -1));
+        jPanel2.add(masculino, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, -1, -1));
 
         femenino.setBackground(new java.awt.Color(153, 0, 153));
         femenino.setForeground(new java.awt.Color(255, 255, 255));
         femenino.setText("F");
-        jPanel2.add(femenino, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 110, -1, -1));
+        jPanel2.add(femenino, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 80, -1, -1));
 
         create_buttom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
         create_buttom.addActionListener(new java.awt.event.ActionListener() {
@@ -296,12 +305,12 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
         jbl_Especialidad3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jbl_Especialidad3.setForeground(new java.awt.Color(255, 255, 255));
         jbl_Especialidad3.setText("Fecha de Nacimiento:");
-        jPanel2.add(jbl_Especialidad3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 160, -1, -1));
+        jPanel2.add(jbl_Especialidad3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 130, -1, -1));
 
         jbl_Contraseña5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jbl_Contraseña5.setForeground(new java.awt.Color(255, 255, 255));
         jbl_Contraseña5.setText("Enfermero/a");
-        jPanel2.add(jbl_Contraseña5, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 310, -1, -1));
+        jPanel2.add(jbl_Contraseña5, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, -1, -1));
 
         jbl_Contraseña6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jbl_Contraseña6.setForeground(new java.awt.Color(255, 255, 255));
@@ -313,18 +322,18 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
                 combo_enfermeroActionPerformed(evt);
             }
         });
-        jPanel2.add(combo_enfermero, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 340, 210, -1));
+        jPanel2.add(combo_enfermero, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 300, 210, -1));
 
         jbl_Contraseña7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jbl_Contraseña7.setForeground(new java.awt.Color(255, 255, 255));
         jbl_Contraseña7.setText("Diagnostico");
-        jPanel2.add(jbl_Contraseña7, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 390, -1, -1));
+        jPanel2.add(jbl_Contraseña7, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 340, -1, -1));
 
         text_diagnostico.setColumns(20);
         text_diagnostico.setRows(5);
         jScrollPane1.setViewportView(text_diagnostico);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 420, 250, 80));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 370, 250, 80));
 
         text_motivo.setColumns(20);
         text_motivo.setRows(5);
@@ -346,7 +355,7 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 490, -1, -1));
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 490, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondo3.jpg"))); // NOI18N
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 540));
@@ -370,8 +379,13 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        new AdministradorPanel("paciente").setVisible(true);
-        dispose();
+        if (edit) {
+            new GestorUsuarios(cargoUsuario).setVisible(true);
+            dispose();
+        } else {
+            new AdministradorPanel(cargoUsuario).setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void apeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apeActionPerformed
@@ -423,7 +437,7 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
                 pstm.setString(9, cargo);
                 pstm.execute();
                 JOptionPane.showMessageDialog(null, "Registro Exitoso");
-                new AdministradorPanel(cargo).setVisible(true);
+                new AdministradorPanel(cargoUsuario).setVisible(true);
                 dispose();
             } catch (SQLException ex) {
                 Logger.getLogger(RegistroPacientePanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -481,7 +495,7 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
                 pstm.setString(9, idPaciente);
                 pstm.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Actualizacion Exitoso");
-                new GestorUsuarios(cargo).setVisible(true);
+                new GestorUsuarios(cargoUsuario).setVisible(true);
                 dispose();
             } catch (SQLException ex) {
                 Logger.getLogger(RegistroPacientePanel.class.getName()).log(Level.SEVERE, null, ex);

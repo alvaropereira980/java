@@ -141,7 +141,7 @@ public class LoginPanel extends javax.swing.JFrame {
             pstmedico.setString(2, contraseña);
             ResultSet resultadoMedico = pstmedico.executeQuery();
             if (resultadoMedico.next()) {
-                JOptionPane.showMessageDialog(null, "Bienvenido Medico " + usuario);
+                JOptionPane.showMessageDialog(null, "Bienvenido Medico: " + usuario);
                 new AdministradorPanel("medico").setVisible(true);
                 dispose();
             } else {
@@ -151,7 +151,7 @@ public class LoginPanel extends javax.swing.JFrame {
                 pstAdministrador.setString(2, contraseña);
                 ResultSet resultadoAdministrador = pstAdministrador.executeQuery();
                 if (resultadoAdministrador.next()) {
-                    JOptionPane.showMessageDialog(null, "Bienvenido Administrador " + usuario);
+                    JOptionPane.showMessageDialog(null, "Bienvenido Administrador: " + usuario);
                     new AdministradorPanel("administrador").setVisible(true);
                     dispose();
                 } else {
@@ -161,7 +161,7 @@ public class LoginPanel extends javax.swing.JFrame {
                     pstBiomedico.setString(2, contraseña);
                     ResultSet resultadoBiomedico = pstBiomedico.executeQuery();
                     if (resultadoBiomedico.next()) {
-                        JOptionPane.showMessageDialog(null, "Bienvenido Biomedico " + usuario);
+                        JOptionPane.showMessageDialog(null, "Bienvenido Biomedico: " + usuario);
                         new AdministradorPanel("biomedico").setVisible(true);
                         dispose();
                     } else {

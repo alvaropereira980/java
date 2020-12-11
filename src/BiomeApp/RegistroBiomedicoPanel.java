@@ -34,31 +34,41 @@ public class RegistroBiomedicoPanel extends javax.swing.JFrame {
 
     final String cargo = "biomedico";
     String idBiomedico = "";
+    String cargoUsuario = "";
+    boolean edit = false;
 
     /**
      * Creates new form Enfermero
      */
-    public RegistroBiomedicoPanel() {
+    public RegistroBiomedicoPanel(String cargo) {
         initComponents();
         this.setTitle("Biomedico");
         this.setLocation(250, 50);
         this.setResizable(false);
         groupButton();
+        cargoUsuario = cargo;
         update_buttom.setVisible(false);
         create_buttom.setVisible(true);
     }
 
-    public RegistroBiomedicoPanel(String id) {
+    public RegistroBiomedicoPanel(String id, String cargo) {
         initComponents();
         this.setTitle("Biomedico");
         this.setLocation(250, 50);
         this.setResizable(false);
         groupButton();
         titulo.setText("Editar Biomedico");
-        id = id;
+        idBiomedico = id;
+        edit = true;
+        cargoUsuario = cargo;
         InitEdit(id);
         update_buttom.setVisible(true);
         create_buttom.setVisible(false);
+
+    }
+
+    private RegistroBiomedicoPanel() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void InitEdit(String id) {
@@ -346,8 +356,13 @@ public class RegistroBiomedicoPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        new AdministradorPanel("biomedico").setVisible(true);
-        dispose();
+        if (edit) {
+            new GestorUsuarios(cargoUsuario).setVisible(true);
+            dispose();
+        } else {
+            new AdministradorPanel(cargoUsuario).setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -410,7 +425,7 @@ public class RegistroBiomedicoPanel extends javax.swing.JFrame {
                 pstm.execute();
 
                 JOptionPane.showMessageDialog(null, "Registro Exitoso");
-                new AdministradorPanel(cargo).setVisible(true);
+                new AdministradorPanel(cargoUsuario).setVisible(true);
                 dispose();
             } catch (SQLException ex) {
                 Logger.getLogger(RegistroBiomedicoPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -471,7 +486,7 @@ public class RegistroBiomedicoPanel extends javax.swing.JFrame {
                 pstm.setString(7, idBiomedico);
                 pstm.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Actulizacion Exitoso");
-                new GestorUsuarios(cargo).setVisible(true);
+                new GestorUsuarios(cargoUsuario).setVisible(true);
                 dispose();
             } catch (SQLException ex) {
                 Logger.getLogger(RegistroBiomedicoPanel.class.getName()).log(Level.SEVERE, null, ex);

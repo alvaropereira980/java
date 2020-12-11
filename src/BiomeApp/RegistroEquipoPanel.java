@@ -34,21 +34,24 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
 
     final String cargo = "equipo";
     String idEquipo = "";
+    String cargoUsuario = "";
+    boolean edit = false;
 
     /**
      * Creates new form Enfermero
      */
-    public RegistroEquipoPanel() {
+    public RegistroEquipoPanel(String cargo) {
         initComponents();
         this.setTitle("Equipo");
         this.setLocation(250, 50);
         this.setResizable(false);
         groupButton();
+        cargoUsuario = cargo;
         update_buttom.setVisible(false);
         create_buttom.setVisible(true);
     }
 
-    public RegistroEquipoPanel(String id) {
+    public RegistroEquipoPanel(String id, String cargo) {
         initComponents();
         this.setTitle("Equipo");
         this.setLocation(250, 50);
@@ -56,9 +59,15 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
         groupButton();
         titulo.setText("Editar Equipo");
         idEquipo = id;
+        cargoUsuario = cargo;
+        edit = true;
         InitEdit(id);
         update_buttom.setVisible(true);
         create_buttom.setVisible(false);
+    }
+
+    private RegistroEquipoPanel() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void InitEdit(String id) {
@@ -303,7 +312,7 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
         });
         jPanel2.add(update_buttom, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, -1, -1));
 
-        jButton1.setText("jButton1");
+        jButton1.setText("logout");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -333,8 +342,13 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        new AdministradorPanel("administrador").setVisible(true);
-        dispose();
+        if (edit) {
+            new GestorUsuarios(cargoUsuario).setVisible(true);
+            dispose();
+        } else {
+            new AdministradorPanel(cargoUsuario).setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void text_estadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_estadoActionPerformed
@@ -379,7 +393,7 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
                 pstm.setString(6, descripcion);
                 pstm.execute();
                 JOptionPane.showMessageDialog(null, "Registro Exitoso");
-                new AdministradorPanel(cargo).setVisible(true);
+                new AdministradorPanel(cargoUsuario).setVisible(true);
                 dispose();
             } catch (SQLException ex) {
                 Logger.getLogger(RegistroEquipoPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -429,7 +443,7 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
                 pstm.setString(7, idEquipo);
                 pstm.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Actulizacion Exitoso");
-                new GestorUsuarios(cargo).setVisible(true);
+                new GestorUsuarios(cargoUsuario).setVisible(true);
                 dispose();
             } catch (SQLException ex) {
                 Logger.getLogger(RegistroEquipoPanel.class.getName()).log(Level.SEVERE, null, ex);

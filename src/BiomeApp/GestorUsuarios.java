@@ -23,6 +23,7 @@ import javax.swing.table.TableColumn;
  */
 public class GestorUsuarios extends javax.swing.JFrame {
 
+    String cargoUsuario = "";
     Statement stmt = null;
     Connection con = null;
     String usuario_seleccionado = "";
@@ -43,27 +44,39 @@ public class GestorUsuarios extends javax.swing.JFrame {
     /**
      * Creates new form GestorUsuarios
      */
-    public GestorUsuarios() {
-        initComponents();
-        this.setTitle("consulta usuarios");
-        this.setLocation(250, 50);
-        this.setResizable(false);
-        connection();
-        inicializarTablaUsuarios();
-        inicializarTablaEquipo();
-        inicializarTablaPaciente();
-
-    }
-
     public GestorUsuarios(String cargo) {
         initComponents();
         this.setTitle("consulta usuarios");
         this.setLocation(250, 50);
         this.setResizable(false);
         connection();
+        cargoUsuario = cargo;
         inicializarTablaUsuarios();
         inicializarTablaEquipo();
         inicializarTablaPaciente();
+        if (cargo.equals("medico")) {
+            delete_buttom.setEnabled(false);
+            tabla_usuarios.setVisible(false);
+            tabla_equipo.setVisible(false);
+            cargo_usuarios.setVisible(false);
+        }
+        if (cargo.equals("biomedico")) {
+            delete_buttom.setEnabled(false);
+            tabla_usuarios.setVisible(false);
+            tabla_equipo.setVisible(false);
+            cargo_usuarios.setVisible(false);
+        }
+
+        if (cargo.equals("enfermero")) {
+            delete_buttom.setEnabled(false);
+            tabla_usuarios.setVisible(false);
+            tabla_equipo.setVisible(false);
+            cargo_usuarios.setVisible(false);
+        }
+    }
+
+    private GestorUsuarios() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void connection() {
@@ -84,23 +97,23 @@ public class GestorUsuarios extends javax.swing.JFrame {
 
     private void editarUsuarios() {
         if (cargo_seleccionado.equals("medico")) {
-            new RegistroMedicoPanel(usuario_seleccionado).setVisible(true);
+            new RegistroMedicoPanel(usuario_seleccionado, cargoUsuario).setVisible(true);
             dispose();
         }
         if (cargo_seleccionado.equals("enfermero")) {
-            new RegistroEnfermeroPanel(usuario_seleccionado).setVisible(true);
+            new RegistroEnfermeroPanel(usuario_seleccionado, cargoUsuario).setVisible(true);
             dispose();
         }
         if (cargo_seleccionado.equals("biomedico")) {
-            new RegistroBiomedicoPanel(usuario_seleccionado).setVisible(true);
+            new RegistroBiomedicoPanel(usuario_seleccionado, cargoUsuario).setVisible(true);
             dispose();
         }
         if (cargo_seleccionado.equals("paciente")) {
-            new RegistroPacientePanel(usuario_seleccionado).setVisible(true);
+            new RegistroPacientePanel(usuario_seleccionado, cargoUsuario).setVisible(true);
             dispose();
         }
         if (cargo_seleccionado.equals("equipo")) {
-            new RegistroEquipoPanel(usuario_seleccionado).setVisible(true);
+            new RegistroEquipoPanel(usuario_seleccionado, cargoUsuario).setVisible(true);
             dispose();
         }
     }
@@ -129,7 +142,7 @@ public class GestorUsuarios extends javax.swing.JFrame {
     private void inicializarTablaUsuarios() {
         try {
 
-            String selected_user = cargo.getSelectedItem().toString();
+            String selected_user = cargo_usuarios.getSelectedItem().toString();
             stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("select * from " + selected_user);
 
@@ -254,9 +267,9 @@ public class GestorUsuarios extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla_paciente = new javax.swing.JTable();
         jButton8 = new javax.swing.JButton();
-        cargo = new javax.swing.JComboBox<>();
+        cargo_usuarios = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        delete_buttom = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -321,26 +334,26 @@ public class GestorUsuarios extends javax.swing.JFrame {
         });
         jPanel2.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        cargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "medico", "enfermero", "biomedico" }));
-        cargo.addItemListener(new java.awt.event.ItemListener() {
+        cargo_usuarios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "medico", "enfermero", "biomedico" }));
+        cargo_usuarios.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cargoItemStateChanged(evt);
+                cargo_usuariosItemStateChanged(evt);
             }
         });
-        jPanel2.add(cargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, -1, -1));
+        jPanel2.add(cargo_usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Gestor Paciente");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 370, -1, -1));
 
-        jButton2.setText("Eliminar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        delete_buttom.setText("Eliminar");
+        delete_buttom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                delete_buttomActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 560, 120, -1));
+        jPanel2.add(delete_buttom, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 560, 120, -1));
 
         jButton3.setText("Editar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -427,14 +440,14 @@ public class GestorUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        new AdministradorPanel("admnistrador").setVisible(true);
+        new AdministradorPanel(cargoUsuario).setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    private void cargoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cargoItemStateChanged
+    private void cargo_usuariosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cargo_usuariosItemStateChanged
         inicializarTablaUsuarios();
 
-    }//GEN-LAST:event_cargoItemStateChanged
+    }//GEN-LAST:event_cargo_usuariosItemStateChanged
 
     private void tabla_pacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_pacienteMouseClicked
         tabla_usuarios.clearSelection();
@@ -445,10 +458,10 @@ public class GestorUsuarios extends javax.swing.JFrame {
         cargo_seleccionado = "paciente";
     }//GEN-LAST:event_tabla_pacienteMouseClicked
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void delete_buttomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_buttomActionPerformed
         deleteUser();
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_delete_buttomActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         editarUsuarios();
@@ -514,8 +527,8 @@ public class GestorUsuarios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cargo;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> cargo_usuarios;
+    private javax.swing.JButton delete_buttom;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
