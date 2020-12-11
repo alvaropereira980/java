@@ -37,7 +37,7 @@ import java.util.Date;
 public class RegistroMedicoPanel extends javax.swing.JFrame {
 
     File imageFile = null;
-    final String cargo = "Medico";
+    final String cargo = "medico";
     String medicoId = "";
 
     /**
@@ -51,7 +51,6 @@ public class RegistroMedicoPanel extends javax.swing.JFrame {
         groupButton();
         update_buttom.setVisible(false);
         create_buttom.setVisible(true);
-
     }
 
     public RegistroMedicoPanel(String id) {
@@ -64,7 +63,6 @@ public class RegistroMedicoPanel extends javax.swing.JFrame {
         InitEdit(id);
         update_buttom.setVisible(true);
         create_buttom.setVisible(false);
-
     }
 
     public void InitEdit(String id) {
@@ -334,7 +332,7 @@ public class RegistroMedicoPanel extends javax.swing.JFrame {
                 create_buttomActionPerformed(evt);
             }
         });
-        jPanel2.add(create_buttom, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 460, -1, -1));
+        jPanel2.add(create_buttom, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 400, -1, -1));
 
         jbl_Especialidad3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jbl_Especialidad3.setForeground(new java.awt.Color(255, 255, 255));
@@ -460,12 +458,9 @@ public class RegistroMedicoPanel extends javax.swing.JFrame {
                 pstm.setBinaryStream(8, (InputStream) fin, (int) imageFile.length());
                 pstm.setString(9, cargo);
                 pstm.execute();
-
-                nom.setText("");
-                pass.setText("");
-                ape.setText("");
-
                 JOptionPane.showMessageDialog(null, "Registro Exitoso");
+                new AdministradorPanel(cargo).setVisible(true);
+                dispose();
             } catch (SQLException ex) {
                 Logger.getLogger(RegistroMedicoPanel.class.getName()).log(Level.SEVERE, null, ex);
             } catch (FileNotFoundException ex) {
@@ -547,13 +542,10 @@ public class RegistroMedicoPanel extends javax.swing.JFrame {
                     pstm.setString(9, medicoId);
                     pstm.executeUpdate();
 
-                    nom.setText("");
-                    pass.setText("");
-                    ape.setText("");
-
                 }
-
                 JOptionPane.showMessageDialog(null, "Actualizar datos Exitoso");
+                new GestorUsuarios(cargo).setVisible(true);
+                dispose();
             } catch (SQLException ex) {
                 Logger.getLogger(RegistroMedicoPanel.class.getName()).log(Level.SEVERE, null, ex);
             } catch (FileNotFoundException ex) {

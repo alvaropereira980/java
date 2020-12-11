@@ -13,7 +13,10 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
@@ -29,27 +32,66 @@ import java.util.Date;
  */
 public class RegistroEquipoPanel extends javax.swing.JFrame {
 
-    final String cargo = "Equipo";
+    final String cargo = "equipo";
+    String id = "";
 
     /**
      * Creates new form Enfermero
      */
     public RegistroEquipoPanel() {
         initComponents();
-        this.setTitle("Enfermero");
+        this.setTitle("Equipo");
         this.setLocation(250, 50);
         this.setResizable(false);
         groupButton();
-
+        update_buttom.setVisible(true);
+        create_buttom.setVisible(false);
     }
 
     public RegistroEquipoPanel(String cargo) {
         initComponents();
-        this.setTitle("Enfermero");
+        this.setTitle("Equipo");
         this.setLocation(250, 50);
         this.setResizable(false);
         groupButton();
+        titulo.setText("Editar Equipo");
+        id = id;
+        InitEdit(id);
+        update_buttom.setVisible(true);
+        create_buttom.setVisible(false);
+    }
 
+    public void InitEdit(String id) {
+        try {
+            Connection con;
+            Conexion registercon = new Conexion();
+            con = registercon.getConnection();
+            String query = "select * from equipo where id=?";
+            PreparedStatement pstm = con.prepareStatement(query);
+            pstm.setString(1, id);
+            ResultSet rs = pstm.executeQuery();
+            if (rs.next()) {
+                text_Equipo.setText(rs.getString("Equipo"));
+                text_estado.setText(rs.getString("Estado"));
+                text_descripcion.setText(rs.getString("Descripcion"));
+                if (rs.getString("Estado_descripcion").equals("En Uso")) {
+                    check_uso.setSelected(true);
+                } else if (rs.getString("Estado_descripcion").equals("En Mantenimiento")) {
+                    check_mantenimiento.setSelected(true);
+                } else {
+                    check_deuso.setSelected(true);
+                }
+                try {
+                    String fecha = rs.getString("Fecha");
+                    Date date = new SimpleDateFormat("yy-mm-dd").parse(fecha);
+                    campo_fecha.setDate(date);
+                } catch (ParseException ex) {
+                    Logger.getLogger(RegistroMedicoPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistroMedicoPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void groupButton() {
@@ -86,7 +128,7 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jButton7 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        titulo = new javax.swing.JLabel();
         text_estado = new javax.swing.JTextField();
         text_codigo = new javax.swing.JTextField();
         text_Equipo = new javax.swing.JTextField();
@@ -97,12 +139,13 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
         jbl_Especialidad1 = new javax.swing.JLabel();
         check_mantenimiento = new javax.swing.JRadioButton();
         check_uso = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
+        create_buttom = new javax.swing.JButton();
         jbl_Especialidad3 = new javax.swing.JLabel();
         jbl_Contraseña6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         text_descripcion = new javax.swing.JTextArea();
         check_deuso = new javax.swing.JRadioButton();
+        update_buttom = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -131,10 +174,10 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
         });
         jPanel2.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Registro Equipos");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, -1, 20));
+        titulo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        titulo.setForeground(new java.awt.Color(255, 255, 255));
+        titulo.setText("Registro Equipos");
+        jPanel2.add(titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, -1, 20));
 
         text_estado.setBackground(new java.awt.Color(102, 0, 102));
         text_estado.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
@@ -221,13 +264,13 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
         check_uso.setText("En Uso");
         jPanel2.add(check_uso, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        create_buttom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
+        create_buttom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                create_buttomActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, -1, -1));
+        jPanel2.add(create_buttom, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 380, -1, -1));
 
         jbl_Especialidad3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jbl_Especialidad3.setForeground(new java.awt.Color(255, 255, 255));
@@ -249,6 +292,14 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
         check_deuso.setForeground(new java.awt.Color(255, 255, 255));
         check_deuso.setText("En Desuso");
         jPanel2.add(check_deuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, -1, -1));
+
+        update_buttom.setText("Actualizar");
+        update_buttom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                update_buttomActionPerformed(evt);
+            }
+        });
+        jPanel2.add(update_buttom, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondo3.jpg"))); // NOI18N
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 540));
@@ -292,7 +343,7 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_check_mantenimientoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void create_buttomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_buttomActionPerformed
         String equipo = text_Equipo.getText();
         String estado = text_estado.getText().trim();
         String descripcion = text_descripcion.getText().trim();
@@ -319,19 +370,16 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
                 pstm.setString(5, codigo_equipo);
                 pstm.setString(6, descripcion);
                 pstm.execute();
-
-                text_Equipo.setText("");
-                text_codigo.setText("");
-                text_estado.setText("");
-
                 JOptionPane.showMessageDialog(null, "Registro Exitoso");
+                new AdministradorPanel(cargo).setVisible(true);
+                dispose();
             } catch (SQLException ex) {
                 Logger.getLogger(RegistroEquipoPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_create_buttomActionPerformed
 
     private void text_EquipoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_text_EquipoKeyTyped
 
@@ -347,6 +395,41 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_text_estadoKeyTyped
+
+    private void update_buttomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_update_buttomActionPerformed
+
+        String equipo = text_Equipo.getText();
+        String estado = text_estado.getText().trim();
+        String descripcion = text_descripcion.getText().trim();
+        String estado_equipo = getEquipoEstado();
+        String codigo_equipo = text_codigo.getText();
+
+        if (equipo.isEmpty() || estado.isEmpty() || descripcion.isEmpty() || estado_equipo.isEmpty() || codigo_equipo.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Llene todos los datos necesarios");
+        } else {
+            try {
+                Date fecha = campo_fecha.getCalendar().getTime();
+                java.sql.Date dateDB = new java.sql.Date(fecha.getTime());
+                Connection con;
+                Conexion registercon = new Conexion();
+                con = registercon.getConnection();
+                String query = "update equipo set Equipo=?, Estado=?, Estado_descripcion=?, Fecha=?, Codigo=?, descripcion=? where id=?";
+                PreparedStatement pstm = con.prepareStatement(query);
+                pstm.setString(1, equipo);
+                pstm.setString(2, estado);
+                pstm.setString(3, estado_equipo);
+                pstm.setDate(4, dateDB);
+                pstm.setString(5, codigo_equipo);
+                pstm.setString(6, descripcion);
+                pstm.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Actulizacion Exitoso");
+                new GestorUsuarios(cargo).setVisible(true);
+                dispose();
+            } catch (SQLException ex) {
+                Logger.getLogger(RegistroEquipoPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_update_buttomActionPerformed
 
     /**
      * @param args the command line arguments
@@ -899,9 +982,8 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
     private javax.swing.JRadioButton check_deuso;
     private javax.swing.JRadioButton check_mantenimiento;
     private javax.swing.JRadioButton check_uso;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton create_buttom;
     private javax.swing.JButton jButton7;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -916,5 +998,7 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
     private javax.swing.JTextField text_codigo;
     private javax.swing.JTextArea text_descripcion;
     private javax.swing.JTextField text_estado;
+    private javax.swing.JLabel titulo;
+    private javax.swing.JButton update_buttom;
     // End of variables declaration//GEN-END:variables
 }
