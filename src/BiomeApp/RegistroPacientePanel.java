@@ -31,7 +31,7 @@ import java.util.Date;
  * @author alvar
  */
 public class RegistroPacientePanel extends javax.swing.JFrame {
-
+    
     final String cargo = "paciente";
     String id = "";
 
@@ -46,8 +46,9 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
         groupButton();
         update_buttom.setVisible(false);
         create_buttom.setVisible(true);
+        initEnfermero();
     }
-
+    
     public RegistroPacientePanel(String id) {
         initComponents();
         this.setTitle("Editar Paciente");
@@ -60,7 +61,24 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
         update_buttom.setVisible(true);
         create_buttom.setVisible(false);
     }
-
+    
+    private void initEnfermero() {
+        try {
+            Connection con;
+            Conexion registercon = new Conexion();
+            con = registercon.getConnection();
+            String query = "select * from enfermero";
+            PreparedStatement pstm;
+            pstm = con.prepareStatement(query);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                combo_enfermero.addItem(rs.getString("Nombre") + rs.getString("Apellido"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistroPacientePanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void InitEdit(String id) {
         try {
             Connection con;
@@ -94,15 +112,15 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
             Logger.getLogger(RegistroMedicoPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     private void groupButton() {
         ButtonGroup bg1 = new ButtonGroup();
         bg1.add(masculino);
         bg1.add(femenino);
     }
-
+    
     public String getUserGenre() {
-
+        
         String radioText = "";
         if (masculino.isSelected()) {
             radioText = masculino.getText();
@@ -370,19 +388,19 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
         String codigo_paciente = text_codigo.getText();
         String condigo_enfermero = combo_enfermero.getSelectedItem().toString();
         String diagnostico = text_diagnostico.getText().trim();
-
+        
         if (nombre.isEmpty() || apellido.isEmpty() || consulta_descripcion.isEmpty() || codigo_paciente.isEmpty() || condigo_enfermero.isEmpty() || diagnostico.isEmpty() || apellido.isEmpty() || genero.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Llene todos los datos necesarios");
         } else {
             try {
                 Date fecha = campo_fecha.getCalendar().getTime();
                 java.sql.Date dateDB = new java.sql.Date(fecha.getTime());
-
+                
                 Connection con;
                 Conexion registercon = new Conexion();
                 con = registercon.getConnection();
                 String query = "insert into paciente (Nombre, Apellido, Sexo, Fecha, Codigo_paciente, Codigo_enfermero, Consulta_descripcion, Diagnostico, Cargo) values" + "( ?, ?, ?, ?, ?, ? ,? ,? , ?)";
-
+                
                 PreparedStatement pstm = con.prepareStatement(query);
                 pstm.setString(1, nombre);
                 pstm.setString(2, apellido);
@@ -404,7 +422,7 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
     }//GEN-LAST:event_create_buttomActionPerformed
 
     private void nomKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nomKeyTyped
-
+        
         char c = evt.getKeyChar();
         if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z')) {
             evt.consume();
@@ -430,7 +448,7 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
         String codigo_paciente = text_codigo.getText();
         String condigo_enfermero = combo_enfermero.getSelectedItem().toString();
         String diagnostico = text_diagnostico.getText().trim();
-
+        
         if (nombre.isEmpty() || apellido.isEmpty() || consulta_descripcion.isEmpty() || codigo_paciente.isEmpty() || condigo_enfermero.isEmpty() || diagnostico.isEmpty() || apellido.isEmpty() || genero.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Llene todos los datos necesarios");
         } else {
@@ -452,7 +470,6 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
                 pstm.setString(8, diagnostico);
                 pstm.setString(9, id);
                 pstm.executeUpdate();
-
                 JOptionPane.showMessageDialog(null, "Actulizacion Exitoso");
                 new GestorUsuarios(cargo).setVisible(true);
                 dispose();
