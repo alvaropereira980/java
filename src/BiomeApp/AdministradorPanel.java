@@ -172,7 +172,7 @@ public class AdministradorPanel extends javax.swing.JFrame {
 
     private void botom_gestorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botom_gestorActionPerformed
 
-        new GestorUsuarios().setVisible(true);
+        new GestorUsuarios(cargo).setVisible(true);
         dispose();
     }//GEN-LAST:event_botom_gestorActionPerformed
 
@@ -192,7 +192,7 @@ public class AdministradorPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_botom_equiposActionPerformed
 
     private void botom_pacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botom_pacienteActionPerformed
-        new RegistroPacientePanel().setVisible(true);
+        new RegistroPacientePanel(cargo).setVisible(true);
         dispose();
     }//GEN-LAST:event_botom_pacienteActionPerformed
 

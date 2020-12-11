@@ -147,8 +147,8 @@ public class LoginPanel extends javax.swing.JFrame {
             } else {
                 String queryAdministrador = "select Usuario, Contraseña from administrador where Usuario=? and Contraseña=?";
                 PreparedStatement pstAdministrador = con.prepareStatement(queryAdministrador);
-                pstmedico.setString(1, usuario);
-                pstmedico.setString(2, contraseña);
+                pstAdministrador.setString(1, usuario);
+                pstAdministrador.setString(2, contraseña);
                 ResultSet resultadoAdministrador = pstAdministrador.executeQuery();
                 if (resultadoAdministrador.next()) {
                     JOptionPane.showMessageDialog(null, "Bienvenido Administrador " + usuario);
@@ -157,8 +157,8 @@ public class LoginPanel extends javax.swing.JFrame {
                 } else {
                     String queryBiomedico = "select Usuario, Contraseña from biomedico where Usuario=? and Contraseña=?";
                     PreparedStatement pstBiomedico = con.prepareStatement(queryBiomedico);
-                    pstmedico.setString(1, usuario);
-                    pstmedico.setString(2, contraseña);
+                    pstBiomedico.setString(1, usuario);
+                    pstBiomedico.setString(2, contraseña);
                     ResultSet resultadoBiomedico = pstBiomedico.executeQuery();
                     if (resultadoBiomedico.next()) {
                         JOptionPane.showMessageDialog(null, "Bienvenido Biomedico " + usuario);
@@ -167,8 +167,8 @@ public class LoginPanel extends javax.swing.JFrame {
                     } else {
                         String queryEnfermero = "select Usuario, Contraseña from enfermero where Usuario=? and Contraseña=?";
                         PreparedStatement pstEnfermero = con.prepareStatement(queryEnfermero);
-                        pstmedico.setString(1, usuario);
-                        pstmedico.setString(2, contraseña);
+                        pstEnfermero.setString(1, usuario);
+                        pstEnfermero.setString(2, contraseña);
                         ResultSet resultadoEnfermero = pstEnfermero.executeQuery();
                         if (resultadoEnfermero.next()) {
                             JOptionPane.showMessageDialog(null, "Bienvenido Enfermero " + usuario);

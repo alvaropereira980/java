@@ -43,6 +43,15 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
 
     }
 
+    public RegistroPacientePanel(String cargo) {
+        initComponents();
+        this.setTitle("Enfermero");
+        this.setLocation(250, 50);
+        this.setResizable(false);
+        groupButton();
+
+    }
+
     private void groupButton() {
         ButtonGroup bg1 = new ButtonGroup();
         bg1.add(masculino);

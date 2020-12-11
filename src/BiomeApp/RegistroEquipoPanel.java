@@ -43,6 +43,15 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
 
     }
 
+    public RegistroEquipoPanel(String cargo) {
+        initComponents();
+        this.setTitle("Enfermero");
+        this.setLocation(250, 50);
+        this.setResizable(false);
+        groupButton();
+
+    }
+
     private void groupButton() {
         ButtonGroup bg1 = new ButtonGroup();
         bg1.add(check_mantenimiento);
