@@ -31,9 +31,9 @@ import java.util.Date;
  * @author alvar
  */
 public class RegistroPacientePanel extends javax.swing.JFrame {
-    
+
     final String cargo = "paciente";
-    String id = "";
+    String idPaciente = "";
 
     /**
      * Creates new form Enfermero
@@ -48,7 +48,7 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
         create_buttom.setVisible(true);
         initEnfermero();
     }
-    
+
     public RegistroPacientePanel(String id) {
         initComponents();
         this.setTitle("Editar Paciente");
@@ -56,12 +56,13 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
         this.setResizable(false);
         groupButton();
         titulo.setText("Editar Paciente");
-        id = id;
+        idPaciente = id;
         InitEdit(id);
         update_buttom.setVisible(true);
         create_buttom.setVisible(false);
+        initEnfermero();
     }
-    
+
     private void initEnfermero() {
         try {
             Connection con;
@@ -72,13 +73,13 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
             pstm = con.prepareStatement(query);
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
-                combo_enfermero.addItem(rs.getString("Nombre") + rs.getString("Apellido"));
+                combo_enfermero.addItem(rs.getString("Nombre") + " " + rs.getString("Apellido"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(RegistroPacientePanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void InitEdit(String id) {
         try {
             Connection con;
@@ -95,7 +96,7 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
                 text_motivo.setText(rs.getString("Consulta_descripcion"));
                 text_diagnostico.setText(rs.getString("Diagnostico"));
                 combo_enfermero.setSelectedItem(rs.getString("Codigo_enfermero"));
-                if (rs.getString("Sexo").equals("Hombre")) {
+                if (rs.getString("Sexo").equals("M")) {
                     masculino.setSelected(true);
                 } else {
                     femenino.setSelected(true);
@@ -112,15 +113,15 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
             Logger.getLogger(RegistroMedicoPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void groupButton() {
         ButtonGroup bg1 = new ButtonGroup();
         bg1.add(masculino);
         bg1.add(femenino);
     }
-    
+
     public String getUserGenre() {
-        
+
         String radioText = "";
         if (masculino.isSelected()) {
             radioText = masculino.getText();
@@ -165,6 +166,7 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         text_motivo = new javax.swing.JTextArea();
         update_buttom = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -338,6 +340,14 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
         });
         jPanel2.add(update_buttom, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, -1, -1));
 
+        jButton1.setText("Logout");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 490, -1, -1));
+
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondo3.jpg"))); // NOI18N
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 540));
 
@@ -388,19 +398,19 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
         String codigo_paciente = text_codigo.getText();
         String condigo_enfermero = combo_enfermero.getSelectedItem().toString();
         String diagnostico = text_diagnostico.getText().trim();
-        
+
         if (nombre.isEmpty() || apellido.isEmpty() || consulta_descripcion.isEmpty() || codigo_paciente.isEmpty() || condigo_enfermero.isEmpty() || diagnostico.isEmpty() || apellido.isEmpty() || genero.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Llene todos los datos necesarios");
         } else {
             try {
                 Date fecha = campo_fecha.getCalendar().getTime();
                 java.sql.Date dateDB = new java.sql.Date(fecha.getTime());
-                
+
                 Connection con;
                 Conexion registercon = new Conexion();
                 con = registercon.getConnection();
                 String query = "insert into paciente (Nombre, Apellido, Sexo, Fecha, Codigo_paciente, Codigo_enfermero, Consulta_descripcion, Diagnostico, Cargo) values" + "( ?, ?, ?, ?, ?, ? ,? ,? , ?)";
-                
+
                 PreparedStatement pstm = con.prepareStatement(query);
                 pstm.setString(1, nombre);
                 pstm.setString(2, apellido);
@@ -422,7 +432,7 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
     }//GEN-LAST:event_create_buttomActionPerformed
 
     private void nomKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nomKeyTyped
-        
+
         char c = evt.getKeyChar();
         if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z')) {
             evt.consume();
@@ -448,7 +458,7 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
         String codigo_paciente = text_codigo.getText();
         String condigo_enfermero = combo_enfermero.getSelectedItem().toString();
         String diagnostico = text_diagnostico.getText().trim();
-        
+
         if (nombre.isEmpty() || apellido.isEmpty() || consulta_descripcion.isEmpty() || codigo_paciente.isEmpty() || condigo_enfermero.isEmpty() || diagnostico.isEmpty() || apellido.isEmpty() || genero.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Llene todos los datos necesarios");
         } else {
@@ -458,7 +468,7 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
                 Connection con;
                 Conexion registercon = new Conexion();
                 con = registercon.getConnection();
-                String query = "update paciente set Nombre=?, Apellido=?, Sexo=?, Fecha=?, Codigo_paciente=?, Codigo_enfermero=?, Consulta_descripcion=?, Diagnostico=? where id=?";
+                String query = "UPDATE paciente SET Nombre=?, Apellido=?, Sexo=?, Fecha=?, Codigo_paciente=?, Codigo_enfermero=?, Consulta_descripcion=?, Diagnostico=? WHERE id=?;";
                 PreparedStatement pstm = con.prepareStatement(query);
                 pstm.setString(1, nombre);
                 pstm.setString(2, apellido);
@@ -468,9 +478,9 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
                 pstm.setString(6, condigo_enfermero);
                 pstm.setString(7, consulta_descripcion);
                 pstm.setString(8, diagnostico);
-                pstm.setString(9, id);
+                pstm.setString(9, idPaciente);
                 pstm.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Actulizacion Exitoso");
+                JOptionPane.showMessageDialog(null, "Actualizacion Exitoso");
                 new GestorUsuarios(cargo).setVisible(true);
                 dispose();
             } catch (SQLException ex) {
@@ -479,6 +489,11 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_update_buttomActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        new LoginPanel().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -648,6 +663,7 @@ public class RegistroPacientePanel extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> combo_enfermero;
     private javax.swing.JButton create_buttom;
     private javax.swing.JRadioButton femenino;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

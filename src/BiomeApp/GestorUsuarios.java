@@ -173,9 +173,7 @@ public class GestorUsuarios extends javax.swing.JFrame {
 
             stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("select * from equipo");
-
             modelo_equipo = new DefaultTableModel(null, titulos_equipo);
-
             while (rs.next()) {
                 fila_equipo[0] = rs.getString("id");
                 fila_equipo[1] = rs.getString("Equipo");
@@ -185,7 +183,6 @@ public class GestorUsuarios extends javax.swing.JFrame {
                 modelo_equipo.addRow(fila_equipo);
             }
             tabla_equipo.setModel(modelo_equipo);
-
             tabla_equipo.setModel(modelo_equipo);
             TableColumn cid = tabla_equipo.getColumn("id");
             cid.setMaxWidth(50);
@@ -207,9 +204,7 @@ public class GestorUsuarios extends javax.swing.JFrame {
         try {
             stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("select * from paciente");
-
             modelo_paciente = new DefaultTableModel(null, titulos_paciente);
-
             while (rs.next()) {
                 fila_pacientes[0] = rs.getString("id");
                 fila_pacientes[1] = rs.getString("Nombre");
@@ -427,7 +422,8 @@ public class GestorUsuarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        System.exit(0);
+        new LoginPanel().setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed

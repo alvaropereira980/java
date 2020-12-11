@@ -33,7 +33,7 @@ import java.util.Date;
 public class RegistroEquipoPanel extends javax.swing.JFrame {
 
     final String cargo = "equipo";
-    String id = "";
+    String idEquipo = "";
 
     /**
      * Creates new form Enfermero
@@ -44,18 +44,18 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
         this.setLocation(250, 50);
         this.setResizable(false);
         groupButton();
-        update_buttom.setVisible(true);
-        create_buttom.setVisible(false);
+        update_buttom.setVisible(false);
+        create_buttom.setVisible(true);
     }
 
-    public RegistroEquipoPanel(String cargo) {
+    public RegistroEquipoPanel(String id) {
         initComponents();
         this.setTitle("Equipo");
         this.setLocation(250, 50);
         this.setResizable(false);
         groupButton();
         titulo.setText("Editar Equipo");
-        id = id;
+        idEquipo = id;
         InitEdit(id);
         update_buttom.setVisible(true);
         create_buttom.setVisible(false);
@@ -74,11 +74,12 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
                 text_Equipo.setText(rs.getString("Equipo"));
                 text_estado.setText(rs.getString("Estado"));
                 text_descripcion.setText(rs.getString("Descripcion"));
+                text_codigo.setText(rs.getString("Codigo"));
                 if (rs.getString("Estado_descripcion").equals("En Uso")) {
                     check_uso.setSelected(true);
                 } else if (rs.getString("Estado_descripcion").equals("En Mantenimiento")) {
                     check_mantenimiento.setSelected(true);
-                } else {
+                } else if (rs.getString("Estado_descripcion").equals("En Deuso")) {
                     check_deuso.setSelected(true);
                 }
                 try {
@@ -110,7 +111,7 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
         if (check_uso.isSelected()) {
             radioText = check_uso.getText();
         }
-        if (check_uso.isSelected()) {
+        if (check_deuso.isSelected()) {
             radioText = check_deuso.getText();
         }
         return radioText;
@@ -146,6 +147,7 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
         text_descripcion = new javax.swing.JTextArea();
         check_deuso = new javax.swing.JRadioButton();
         update_buttom = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -270,7 +272,7 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
                 create_buttomActionPerformed(evt);
             }
         });
-        jPanel2.add(create_buttom, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 380, -1, -1));
+        jPanel2.add(create_buttom, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 370, -1, -1));
 
         jbl_Especialidad3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jbl_Especialidad3.setForeground(new java.awt.Color(255, 255, 255));
@@ -290,7 +292,7 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
 
         check_deuso.setBackground(new java.awt.Color(153, 0, 153));
         check_deuso.setForeground(new java.awt.Color(255, 255, 255));
-        check_deuso.setText("En Desuso");
+        check_deuso.setText("En Deuso");
         jPanel2.add(check_deuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, -1, -1));
 
         update_buttom.setText("Actualizar");
@@ -299,7 +301,15 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
                 update_buttomActionPerformed(evt);
             }
         });
-        jPanel2.add(update_buttom, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, -1, -1));
+        jPanel2.add(update_buttom, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, -1, -1));
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 490, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondo3.jpg"))); // NOI18N
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 540));
@@ -356,12 +366,10 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
             try {
                 Date fecha = campo_fecha.getCalendar().getTime();
                 java.sql.Date dateDB = new java.sql.Date(fecha.getTime());
-
                 Connection con;
                 Conexion registercon = new Conexion();
                 con = registercon.getConnection();
                 String query = "insert into equipo (Equipo, Estado, Estado_descripcion, Fecha, Codigo, descripcion) values" + "( ?, ?, ?, ?, ?, ?)";
-
                 PreparedStatement pstm = con.prepareStatement(query);
                 pstm.setString(1, equipo);
                 pstm.setString(2, estado);
@@ -377,8 +385,6 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
                 Logger.getLogger(RegistroEquipoPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
-
     }//GEN-LAST:event_create_buttomActionPerformed
 
     private void text_EquipoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_text_EquipoKeyTyped
@@ -397,7 +403,6 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_text_estadoKeyTyped
 
     private void update_buttomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_update_buttomActionPerformed
-
         String equipo = text_Equipo.getText();
         String estado = text_estado.getText().trim();
         String descripcion = text_descripcion.getText().trim();
@@ -421,6 +426,7 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
                 pstm.setDate(4, dateDB);
                 pstm.setString(5, codigo_equipo);
                 pstm.setString(6, descripcion);
+                pstm.setString(7, idEquipo);
                 pstm.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Actulizacion Exitoso");
                 new GestorUsuarios(cargo).setVisible(true);
@@ -430,6 +436,11 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_update_buttomActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        new LoginPanel().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -983,6 +994,7 @@ public class RegistroEquipoPanel extends javax.swing.JFrame {
     private javax.swing.JRadioButton check_mantenimiento;
     private javax.swing.JRadioButton check_uso;
     private javax.swing.JButton create_buttom;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

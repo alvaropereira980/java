@@ -33,7 +33,7 @@ import java.util.Date;
 public class RegistroBiomedicoPanel extends javax.swing.JFrame {
 
     final String cargo = "biomedico";
-    String id = "";
+    String idBiomedico = "";
 
     /**
      * Creates new form Enfermero
@@ -171,13 +171,13 @@ public class RegistroBiomedicoPanel extends javax.swing.JFrame {
         });
         jPanel2.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        jButton8.setText("Salir");
+        jButton8.setText("Logout");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 490, -1, -1));
+        jPanel2.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 480, -1, -1));
 
         titulo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         titulo.setForeground(new java.awt.Color(255, 255, 255));
@@ -351,7 +351,8 @@ public class RegistroBiomedicoPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        System.exit(0);
+        new LoginPanel().setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void apeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apeActionPerformed
@@ -467,7 +468,7 @@ public class RegistroBiomedicoPanel extends javax.swing.JFrame {
                 pstm.setDate(4, dateDB);
                 pstm.setString(5, usuario);
                 pstm.setString(6, password);
-                pstm.setString(7, id);
+                pstm.setString(7, idBiomedico);
                 pstm.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Actulizacion Exitoso");
                 new GestorUsuarios(cargo).setVisible(true);

@@ -136,7 +136,7 @@ public class AdministradorPanel extends javax.swing.JFrame {
         });
         jPanel2.add(botom_paciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, -1, -1));
 
-        jButton7.setText("Salir");
+        jButton7.setText("Logout");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
@@ -192,12 +192,13 @@ public class AdministradorPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_botom_equiposActionPerformed
 
     private void botom_pacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botom_pacienteActionPerformed
-        new RegistroPacientePanel(cargo).setVisible(true);
+        new RegistroPacientePanel().setVisible(true);
         dispose();
     }//GEN-LAST:event_botom_pacienteActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        System.exit(0);
+        new LoginPanel().setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void botom_medicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botom_medicoActionPerformed

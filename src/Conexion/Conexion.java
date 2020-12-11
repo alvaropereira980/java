@@ -25,14 +25,23 @@ public class Conexion {
             System.out.println("Class not found and unable to connect" + cnf.getLocalizedMessage());
         }
         try {
-             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bd_administrador", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bd_administrador", "root", "");
         } catch (SQLException e) {
             System.out.println("Error en la conexion local" + e);
         }
+    }
+
+    public void closeConexion() {
+        try {
+            con.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println("Database closed successfully");
     }
 
     public Connection getConnection() {
         return con;
     }
 }
-

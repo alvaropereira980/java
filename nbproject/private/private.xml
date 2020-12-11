@@ -2,6 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/alvar/OneDrive/Desktop/JavaApplication2/src/BiomeApp/AdministradorPanel.java</file>
+            <file>file:/C:/Users/alvar/OneDrive/Desktop/JavaApplication2/src/BiomeApp/LoginPanel.java</file>
+            <file>file:/C:/Users/alvar/OneDrive/Desktop/JavaApplication2/src/BiomeApp/RegistroMedicoPanel.java</file>
+            <file>file:/C:/Users/alvar/OneDrive/Desktop/JavaApplication2/src/BiomeApp/RegistroPacientePanel.java</file>
+            <file>file:/C:/Users/alvar/OneDrive/Desktop/JavaApplication2/src/BiomeApp/GestorUsuarios.java</file>
+            <file>file:/C:/Users/alvar/OneDrive/Desktop/JavaApplication2/src/BiomeApp/RegistroEnfermeroPanel.java</file>
+            <file>file:/C:/Users/alvar/OneDrive/Desktop/JavaApplication2/src/BiomeApp/RegistroEquipoPanel.java</file>
+            <file>file:/C:/Users/alvar/OneDrive/Desktop/JavaApplication2/src/BiomeApp/RegistroBiomedicoPanel.java</file>
+        </group>
     </open-files>
 </project-private>
